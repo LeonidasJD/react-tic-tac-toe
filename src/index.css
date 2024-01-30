@@ -29,11 +29,13 @@ body {
   min-height: 110rem;
 }
 
-header {
+#headerWrapper {
   text-align: center;
 }
 
-header img {
+
+
+#headerWrapper img {
   width: 8rem;
   object-fit: contain;
   margin: 3rem auto 1rem auto;
