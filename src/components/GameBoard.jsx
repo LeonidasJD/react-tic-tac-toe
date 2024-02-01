@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export default function GameBoard() {
+export default function GameBoard({ onSelectSquare, activePlayerSybol }) {
   const initialGameBoard = [
     [null, null, null],
     [null, null, null],
@@ -15,9 +15,11 @@ export default function GameBoard() {
       const updatedBoard = [
         ...prevGameBoard.map((innerArray) => [...innerArray]), //U AZURIRANO STANJE BOARDA STAVLJAM KOPIJU STAROG STANJA(PROLAZIM KROZ NIZOVE BOARDA I PAKUJEM IH U NOVI NIZ innerArray), KOPIJA SE STAVLJA KAKO NE BI OBRISALI STARO STANJE I SAMO POSTAVILI NOVO
       ];
-      updatedBoard[rowIndex][colIndex] = "X"; //U AZURIRANO STANJE POSTAVLJAM NOVO STANJE TAKO DA U NIZ U TACAN RED I KOLONU POSTAVLJAM X
+      updatedBoard[rowIndex][colIndex] = activePlayerSybol; //U AZURIRANO STANJE POSTAVLJAM NOVO STANJE TAKO DA U NIZ U TACAN RED I KOLONU POSTAVLJAM X
       return updatedBoard; //VRACAM AZURIRANO I STARO STANJE KAKO BI STARI ZNAKOVI OSTALI I DODALI SE NOVI
     });
+
+    onSelectSquare();
   }
 
   return (
