@@ -1,26 +1,37 @@
 import { useState } from "react";
 
-export default function GameBoard({ onSelectSquare, activePlayerSybol }) {
+export default function GameBoard({ onSelectSquare,turns }) {
   const initialGameBoard = [
     [null, null, null],
     [null, null, null],
     [null, null, null],
   ]; //KREIRAN NIZ KOJI U SEBI SADRZI TRI NIZA - MULTI-DIMENZIONALNI NIZ
 
-  let [gameBoard, setGameBoard] = useState(initialGameBoard);
+   let gameBoard = initialGameBoard;
 
-  function onHandleSelectSquare(rowIndex, colIndex) {
-    setGameBoard((prevGameBoard) => {
-      //U setGameBoard KAO TRENUTNO STANJE PROVERAM PRETHODNO STANJE BOARD-A
-      const updatedBoard = [
-        ...prevGameBoard.map((innerArray) => [...innerArray]), //U AZURIRANO STANJE BOARDA STAVLJAM KOPIJU STAROG STANJA(PROLAZIM KROZ NIZOVE BOARDA I PAKUJEM IH U NOVI NIZ innerArray), KOPIJA SE STAVLJA KAKO NE BI OBRISALI STARO STANJE I SAMO POSTAVILI NOVO
-      ];
-      updatedBoard[rowIndex][colIndex] = activePlayerSybol; //U AZURIRANO STANJE POSTAVLJAM NOVO STANJE TAKO DA U NIZ U TACAN RED I KOLONU POSTAVLJAM X
-      return updatedBoard; //VRACAM AZURIRANO I STARO STANJE KAKO BI STARI ZNAKOVI OSTALI I DODALI SE NOVI
-    });
+   for (const turn of turns){ //PROLAZIMIO KROZ NIZ TURNS KOJI SMO PREUZELI PREKO PROPSA IZ APP KOMPONENTE
+    const {square,player} = turn;// KORISTIMO DESCTRUCTURING  ASSIGNMENT KAKO BI IZVUKLI VREDNOST SQUARE I PLAYER IZ OBJEKTA TURN
+    const {row,col} = square; //KORISTIMO DESCTRUCTURING  ASSIGNMENT KAKO BI IZVUKLI VREDNOST ROW I COL IZ OBJEKTA SQUARE
 
-    onSelectSquare();
-  }
+    gameBoard [row][col] = player;// UNUTAR GAMEBOARD 2D NIZA U ODGOVAARAJUCU KOLONU I RED POSTAVLJAMO ODREDJEN ZNAK X ILI O KOJI JE DEFINISAN U OBJEKTU TURN U APP KOMPONENTI
+   }
+
+   
+
+  // let [gameBoard, setGameBoard] = useState(initialGameBoard);  ZAKOMENTARISAN HOOK JER SMO SVE PODATKE IZ OVOG HOOKA POSTAVILI UNUTAR APP KOMPONENTE I HOOKA "gameTurns" I UMESTO DVA STANJA NAPRAVILI SMO JEDNO STANJE gameTurns U APP KOPONENTI
+
+  // function onHandleSelectSquare(rowIndex, colIndex) {
+  //   setGameBoard((prevGameBoard) => {
+  //     //U setGameBoard KAO TRENUTNO STANJE PROVERAM PRETHODNO STANJE BOARD-A
+  //     const updatedBoard = [
+  //       ...prevGameBoard.map((innerArray) => [...innerArray]), //U AZURIRANO STANJE BOARDA STAVLJAM KOPIJU STAROG STANJA(PROLAZIM KROZ NIZOVE BOARDA I PAKUJEM IH U NOVI NIZ innerArray), KOPIJA SE STAVLJA KAKO NE BI OBRISALI STARO STANJE I SAMO POSTAVILI NOVO
+  //     ];
+  //     updatedBoard[rowIndex][colIndex] = activePlayerSybol; //U AZURIRANO STANJE POSTAVLJAM NOVO STANJE TAKO DA U NIZ U TACAN RED I KOLONU POSTAVLJAM X
+  //     return updatedBoard; //VRACAM AZURIRANO I STARO STANJE KAKO BI STARI ZNAKOVI OSTALI I DODALI SE NOVI
+  //   });
+
+  //   onSelectSquare();
+  // }
 
   return (
     <ol id="game-board">
@@ -38,7 +49,7 @@ export default function GameBoard({ onSelectSquare, activePlayerSybol }) {
                 ) => (
                   <li key={colIndex}>
                     <button
-                      onClick={() => onHandleSelectSquare(rowIndex, colIndex)}
+                      onClick={()=>onSelectSquare(rowIndex,colIndex)}
                     >
                       {playerSymbol}
                     </button>
