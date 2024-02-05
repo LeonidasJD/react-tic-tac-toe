@@ -56,8 +56,10 @@ function App() {
         currentPlayer = "X"
       }
 
-      const updatedTurns = [{square:{row:rowIndex,col:colIndex},player:currentPlayer},...prevTurns] // KAO NOVO STANJE POSTAVLJAMO NIZ  OD PRETHODNOG STANJE PLUS NOVO ,GDE NAM JE SQUARE ZAPRAVO 
-                                                                                                  //OBJEKAT KOJI SADRZI REDOVE I KOLONE TABLE ZA IGRU I IGRACA,TJ ZNAK KOJI JE NA POTEZU
+      const updatedTurns = [{square:{row:rowIndex,col:colIndex},
+                            player:currentPlayer},
+                            ...prevTurns] // KAO NOVO STANJE POSTAVLJAMO NIZ  OD PRETHODNOG STANJE PLUS NOVO ,GDE NAM JE SQUARE ZAPRAVO 
+                                          //OBJEKAT KOJI SADRZI REDOVE I KOLONE TABLE ZA IGRU I IGRACA,TJ ZNAK KOJI JE NA POTEZU
 
       return updatedTurns;
     });
