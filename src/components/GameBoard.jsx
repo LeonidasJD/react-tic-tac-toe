@@ -1,23 +1,7 @@
 import { useState } from "react";
 
-export default function GameBoard({ onSelectSquare,turns }) {
-  const initialGameBoard = [
-    [null, null, null],
-    [null, null, null],
-    [null, null, null],
-  ]; //KREIRAN NIZ KOJI U SEBI SADRZI TRI NIZA - MULTI-DIMENZIONALNI NIZ
-
-   let gameBoard = initialGameBoard;
-
-   for (const turn of turns){ //PROLAZIMIO KROZ NIZ TURNS KOJI SMO PREUZELI PREKO PROPSA IZ APP KOMPONENTE
-    const {square,player} = turn;// KORISTIMO DESCTRUCTURING  ASSIGNMENT KAKO BI IZVUKLI VREDNOST SQUARE I PLAYER IZ OBJEKTA TURN
-    const {row,col} = square; //KORISTIMO DESCTRUCTURING  ASSIGNMENT KAKO BI IZVUKLI VREDNOST ROW I COL IZ OBJEKTA SQUARE
-
-    gameBoard [row][col] = player;// UNUTAR GAMEBOARD 2D NIZA U ODGOVAARAJUCU KOLONU I RED POSTAVLJAMO ODREDJEN ZNAK X ILI O KOJI JE DEFINISAN U OBJEKTU TURN U APP KOMPONENTI
-   }
-
-   
-
+export default function GameBoard({ onSelectSquare,board }) {
+  
   // let [gameBoard, setGameBoard] = useState(initialGameBoard);  ZAKOMENTARISAN HOOK JER SMO SVE PODATKE IZ OVOG HOOKA POSTAVILI UNUTAR APP KOMPONENTE I HOOKA "gameTurns" I UMESTO DVA STANJA NAPRAVILI SMO JEDNO STANJE gameTurns U APP KOPONENTI
 
   // function onHandleSelectSquare(rowIndex, colIndex) {
@@ -35,7 +19,7 @@ export default function GameBoard({ onSelectSquare,turns }) {
 
   return (
     <ol id="game-board">
-      {gameBoard.map(
+      {board.map(
         (
           row,
           rowIndex // PROLAZIM KROZ NIZ initialGameBoard  I OD NJEGA KREIRAM LIST ITEM KAKO BIH DOBIO 3 REDA OD TRI NIZA KOJI SU U initialGameBoard NIZU
@@ -50,6 +34,7 @@ export default function GameBoard({ onSelectSquare,turns }) {
                   <li key={colIndex}>
                     <button
                       onClick={()=>onSelectSquare(rowIndex,colIndex)}
+                      disabled ={playerSymbol !==null}
                     >
                       {playerSymbol}
                     </button>
