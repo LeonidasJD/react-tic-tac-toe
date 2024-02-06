@@ -75,6 +75,11 @@ function App() {
     });
   }
 
+  function onHandleRematchClick() {
+    setGameTurns([]); //KADA KLIKNEMO NA REMACTH DUGME U MODALU POSTAVLJAMO NOVO STANJE ZA GAME TURNS ,POSTAVLJAMO PRAZAN NIZ ZNACI DA NEMA NIKAKVIH ZNAKOVA
+    setActivePlayer("X"); // I POSTAVLJAMO STANJE KOJI JE ZNAK NA REDU ZA IGRU , POSTAVLJAMO X DA SE RESETUJE CSS DA SE UOKVIRI PLAYER 1
+  }
+
   return (
     <>
       <Header
@@ -97,7 +102,9 @@ function App() {
               isActive={activePlayer === "O"}
             />
           </ol>
-          {winner || hasDraw ? <GameOver winner={winner} /> : null}
+          {winner || hasDraw ? (
+            <GameOver winner={winner} isRematch={onHandleRematchClick} />
+          ) : null}
           {/*iskocice modal ako je winner true ili ako je hasDraw true inace se nece prikazati modal tj bice null*/}
           <GameBoard onSelectSquare={onHandleSelectPlayer} board={gameBoard} />
         </div>
