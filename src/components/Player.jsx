@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export default function Player({ initialName, symbol, isActive }) {
+export default function Player({ initialName, symbol, isActive,onSavePlayers }) {
   let [isEditing, setIsEditing] = useState(false);
   let [playerName, setPlayerName] = useState(initialName);
 
@@ -14,6 +14,11 @@ export default function Player({ initialName, symbol, isActive }) {
         } */
 
     setIsEditing((prevIsEditing) => !prevIsEditing); //ovo je skracena verzija if else uslova koju sam kreirao iznad
+      
+    if(isEditing){
+      onSavePlayers(symbol,playerName);
+    }
+    
   }
 
   function onHandleChange(event) {
