@@ -52,7 +52,7 @@ function App() {
 
   function onHandleSelectPlayer(rowIndex, colIndex) {
     setActivePlayer(
-      (currentActivePlayer) => (currentActivePlayer === "X" ? "O" : "X") //postavlja stanje activePlayer na X ili O koje koristimo za stilizovanje playera da li ce biti uokviren borderom ili ne
+      (prevActivePlayer) => (prevActivePlayer === "X" ? "O" : "X") //postavlja stanje activePlayer na X ili O koje koristimo za stilizovanje playera da li ce biti uokviren borderom ili ne
     );
 
     setGameTurns((prevTurns) => {
