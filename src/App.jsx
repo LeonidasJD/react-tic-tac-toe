@@ -10,6 +10,7 @@ import { useState } from "react";
 function App() {
   let [gameTurns, setGameTurns] = useState([]); //STANJE KOJE PRIKAZUJE PODATKE O TOME KOJI JE ZNAK NA POTEZU I KOJI DEO GAMEBORDA SMO POPUNULI
   let [activePlayer, setActivePlayer] = useState("X"); //stanje koje prikazuje  koji znak je sledeci za igru da li je sledeci klik X ili O
+  let [playerNames,setPlayerNames] = useState({X: "Player 1", O: "Player 2"});
 
   const initialGameBoard = [
     [null, null, null],
@@ -44,7 +45,8 @@ function App() {
       firstSquareSymbol == thirdSquareSymbol
     ) {
       console.log("winer is", firstSquareSymbol); //AKO POSTOJI PRVI ZNAK I AKO SU SVI ZNAKOVI ISTI ONDA ZNACI DA IMAMO POBEDNIKA
-      winner = firstSquareSymbol;
+      winner = playerNames[firstSquareSymbol];
+    
     }
   }
 
@@ -80,6 +82,17 @@ function App() {
     setActivePlayer("X"); // I POSTAVLJAMO STANJE KOJI JE ZNAK NA REDU ZA IGRU , POSTAVLJAMO X DA SE RESETUJE CSS DA SE UOKVIRI PLAYER 1
   }
 
+  
+  function onHandlePlayenNameChange(symbol,newName){
+    setPlayerNames(prevPlayers=>{
+      return{
+        ...prevPlayers,
+        [symbol]:newName
+      }
+    })
+    
+  }
+
   return (
     <>
       <Header
@@ -95,11 +108,13 @@ function App() {
               initialName={"Player1"}
               symbol={"X"}
               isActive={activePlayer === "X"}
+              onSavePlayers={onHandlePlayenNameChange}
             />
             <Player
               initialName={"Player2"}
               symbol={"O"}
               isActive={activePlayer === "O"}
+              onSavePlayers={onHandlePlayenNameChange}
             />
           </ol>
           {winner || hasDraw ? (
